@@ -2,6 +2,7 @@
 use v6;
 use _007;
 use _007::Backend::JavaScript;
+use _007::Backend::QAST;
 
 class Ref {
     has Str $.deref;
@@ -17,6 +18,7 @@ constant %BACKENDS = hash
     "javascript" => -> $ast, $ { print _007::Backend::JavaScript.new.emit($ast) },
     "js" => ref("javascript"),
     "ast" => -> $ast, $ { say ~$ast },
+    "qast" => sub ($ast, $) { _007::Backend::QAST.new.compile($ast) },
 ;
 
 sub run_007($program, Str $backend is copy) {
